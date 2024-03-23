@@ -1,9 +1,11 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:leafapp/logic/auth/bloc/auth_bloc.dart';
 import 'package:leafapp/presentation/screens/home/home_screen.dart';
 import 'package:leafapp/presentation/screens/master_screen/master_home_screen.dart';
 import 'package:leafapp/presentation/utils/repeaters.dart';
@@ -21,6 +23,7 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   late Prefernces _prefs;
   late GoogleSignIn _googleSignIn;
+  late AuthBloc _authBloc;
 
   @override
   void initState() {
@@ -28,14 +31,33 @@ class _LoginPageState extends State<LoginPage> {
     _prefs = Prefernces();
     initializePrefernces();
     _googleSignIn = GoogleSignIn(scopes: ['email']);
+    _authBloc = BlocProvider.of<AuthBloc>(context);
   }
 
   void initializePrefernces() async {
     await _prefs.initializeSharedPrefernces();
   }
 
-  void _handleSignIn() {
-    navigateTo(context, MasterHomePage());
+  void _handleSignIn() async {
+    try {
+      final GoogleSignInAccount? googleSignInAccount =
+          await _googleSignIn.signIn();
+      if (googleSignInAccount != null) {
+        _authBloc.add(
+          UserLoginEvent(
+              email: googleSignInAccount.email,
+              name: googleSignInAccount.displayName!,
+              profilePicture: googleSignInAccount.photoUrl!,
+              status: '',
+              token: ''),
+        );
+        print('User: ${googleSignInAccount.displayName}');
+      } else {
+        print('Sign in canceled');
+      }
+    } catch (error) {
+      print('Error signing in: $error');
+    }
   }
 
   @override
@@ -102,24 +124,46 @@ class _LoginPageState extends State<LoginPage> {
                       ),
                     ),
                   ),
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Column(
-                      children: [
-                        Center(
-                          child: SignInButton(
-                            Buttons.google,
-                            text: "Sign in with google",
-                            onPressed: () {
-                              _handleSignIn();
-                            },
+                  BlocConsumer<AuthBloc, AuthState>(
+                    listener: (context, state) {
+                      if (state is AuthLoginRequestSuccess) {
+                        _prefs.setToken(token: state.authResponse.token);
+                        Navigator.pushReplacementNamed(context, '/home');
+                      }
+                      if (state is AuthLoginError) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            content: Text("Something went wrong"),
                           ),
+                        );
+                      }
+                    },
+                    builder: (context, state) {
+                      if (state is AuthLoadingState) {
+                        return Center(
+                          child: CircularProgressIndicator(),
+                        );
+                      }
+                      return Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Column(
+                          children: [
+                            Center(
+                              child: SignInButton(
+                                Buttons.google,
+                                text: "Sign in with google",
+                                onPressed: () {
+                                  _handleSignIn();
+                                },
+                              ),
+                            ),
+                            const SizedBox(
+                              height: 30,
+                            ),
+                          ],
                         ),
-                        const SizedBox(
-                          height: 30,
-                        ),
-                      ],
-                    ),
+                      );
+                    },
                   ),
                 ],
               ),

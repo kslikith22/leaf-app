@@ -9,13 +9,29 @@ sealed class AuthEvent extends Equatable {
 class UserLoginEvent extends AuthEvent {
   final String name;
   final String email;
-  final String profile_photo;
+  final String profilePicture;
+  final String token;
+  final String status;
   UserLoginEvent({
     required this.email,
     required this.name,
-    required this.profile_photo,
+    required this.profilePicture,
+    required this.status,
+    required this.token,
   });
 
   @immutable
-  List get props => [name, email, profile_photo];
+  List get props => [name, email, profilePicture, status, token];
+}
+
+
+
+class UserVerifyEvent extends AuthEvent {
+  final String token;
+  UserVerifyEvent({
+    required this.token,
+  });
+
+  @immutable
+  List get props => [token];
 }

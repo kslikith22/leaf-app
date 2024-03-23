@@ -6,13 +6,23 @@ sealed class AuthState extends Equatable {
   List get props => [];
 }
 
-final class AuthInitial extends AuthState {}
+class AuthInitial extends AuthState {}
 
-final class AuthLoginRequestSent extends AuthState {}
+class AuthLoadingState extends AuthState {}
 
-final class AuthLoginRequestSuccess extends AuthState {
-  late UserModel userModel;
-  AuthLoginRequestSuccess({required this.userModel});
+class AuthLoginRequestSent extends AuthState {
+  final String name;
+  final String email;
+  final String profilePicture;
+  AuthLoginRequestSent(this.email, this.name, this.profilePicture);
 }
 
-final class AuthLoginError extends AuthState {}
+class AuthLoginRequestSuccess extends AuthState {
+  late AuthResponse authResponse;
+  AuthLoginRequestSuccess({required this.authResponse});
+}
+
+class AuthLoginError extends AuthState {
+  final String error;
+  AuthLoginError({required this.error});
+}

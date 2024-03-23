@@ -1,10 +1,10 @@
 import 'package:dio/dio.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:leafapp/data/models/leaf_model.dart';
-import 'package:leafapp/data/repository/api.dart';
+import 'package:leafapp/data/api/ml_api.dart';
 
 class LeafRepository {
-  API api = API();
+  MLAPI mlapi = MLAPI();
 
   Future postLeafToPredict({required XFile imageFile}) async {
     FormData formData = FormData.fromMap({
@@ -12,7 +12,7 @@ class LeafRepository {
           await MultipartFile.fromFile(imageFile.path, filename: 'image.jpg'),
     });
 
-    final response = await api.sendRequest.post(
+    final response = await mlapi.sendRequest.post(
       '/predict',
       data: formData,
       options: Options(

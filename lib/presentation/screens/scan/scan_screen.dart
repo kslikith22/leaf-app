@@ -9,7 +9,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:http/http.dart' as http;
 import 'package:leafapp/data/models/leaf_model.dart';
-import 'package:leafapp/data/repository/api.dart';
+import 'package:leafapp/data/api/ml_api.dart';
 import 'package:leafapp/logic/leaf/bloc/leaf_bloc.dart';
 import 'package:leafapp/presentation/screens/result_screen/result_screen.dart';
 import 'package:leafapp/presentation/utils/data.dart';
@@ -157,7 +157,18 @@ class _ScanScreenState extends State<ScanScreen> {
                   child: CircularProgressIndicator(),
                 );
               } else if (state is LeafPostError) {
-                return Text("Image not appropriate");
+                return Center(
+                    child: Column(
+                  children: [
+                    Text("Image not appropriate"),
+                    ElevatedButton(
+                      onPressed: () {
+                        _leafBloc.add(LeafResetStateEvent());
+                      },
+                      child: Text("Try again"),
+                    )
+                  ],
+                ));
               }
 
               return Padding(

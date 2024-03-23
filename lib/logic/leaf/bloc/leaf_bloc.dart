@@ -11,8 +11,11 @@ part 'leaf_state.dart';
 class LeafBloc extends Bloc<LeafEvent, LeafState> {
   final LeafRepository leafRepository;
   LeafBloc(this.leafRepository) : super(LeafInitial()) {
-    on<LeafEvent>((event, emit) async {
+    on<LeafPostEvent>((event, emit) async {
       await _postLeafToPredict(event, emit);
+    });
+    on<LeafResetStateEvent>((event, emit) async {
+      emit(LeafInitial());
     });
   }
 

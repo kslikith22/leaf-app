@@ -15,4 +15,12 @@ class Prefernces {
   bool getIntroStatus() {
     return _prefs.getBool(_introStatus) ?? false;
   }
+
+  void setToken({required token}) async {
+    _prefs.setString("token", token);
+  }
+
+  String getToken() {
+    return _prefs.getString("token") ?? '';
+  }
 }

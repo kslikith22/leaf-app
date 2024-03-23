@@ -14,3 +14,5 @@ class LeafPostEvent extends LeafEvent {
   @override
   List<Object> get props => [imageFile];
 }
+
+class LeafResetStateEvent extends LeafEvent{}
