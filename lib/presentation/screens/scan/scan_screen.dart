@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:gap/gap.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:image_picker/image_picker.dart';
@@ -63,18 +64,38 @@ class _ScanScreenState extends State<ScanScreen> {
           surfaceTintColor: Colors.white,
           backgroundColor: Colors.white,
           title: Text(
-            "Confirm Upload",
+            "Leaf Image Preview",
             style:
-                GoogleFonts.roboto(fontWeight: FontWeight.w600, fontSize: 20),
+                GoogleFonts.roboto(fontWeight: FontWeight.w600, fontSize: 18),
           ),
           content: Column(
             mainAxisSize: MainAxisSize.min,
+            mainAxisAlignment: MainAxisAlignment.start,
             children: [
-              Image.file(
-                File(_image!.path),
-                width: MediaQuery.of(context).size.width * 0.5,
-                height: MediaQuery.of(context).size.height * 0.2,
-                fit: BoxFit.cover,
+              SizedBox(
+                height: 3,
+              ),
+              Text(
+                " Your uploaded image will be automatically resized to 150x150 pixels for efficient processing.",
+                style: GoogleFonts.roboto(
+                  fontSize: 10,
+                  color: Colors.grey,
+                ),
+                textAlign: TextAlign.center,
+              ),
+              SizedBox(
+                height: 15,
+              ),
+              ClipRRect(
+                borderRadius: BorderRadius.all(
+                  Radius.circular(10),
+                ),
+                child: Image.file(
+                  File(_image!.path),
+                  width: MediaQuery.of(context).size.width * 0.5,
+                  height: MediaQuery.of(context).size.height * 0.2,
+                  fit: BoxFit.cover,
+                ),
               ),
             ],
           ),
@@ -148,26 +169,64 @@ class _ScanScreenState extends State<ScanScreen> {
           child: BlocConsumer<LeafBloc, LeafState>(
             listener: (context, state) {
               if (state is LeafPostedState) {
-                Navigator.pushNamed(context, '/result');
+                Navigator.pushNamed(context, '/result',
+                    arguments: {"image": _image!});
               }
             },
             builder: (context, state) {
               if (state is LeafPostingState) {
-                return Center(
-                  child: CircularProgressIndicator(),
+                return Padding(
+                  padding: const EdgeInsets.only(top: 250),
+                  child: Center(
+                    child: SpinKitCircle(
+                      size: 50,
+                      color: Colors.green[600],
+                    ),
+                  ),
                 );
               } else if (state is LeafPostError) {
                 return Center(
-                    child: Column(
-                  children: [
-                    Text("Image not appropriate"),
-                    ElevatedButton(
-                      onPressed: () {
-                        _leafBloc.add(LeafResetStateEvent());
-                      },
-                      child: Text("Try again"),
-                    )
-                  ],
+                    child: Padding(
+                  padding: const EdgeInsets.only(top: 100),
+                  child: Column(
+                    children: [
+                      Text(
+                        "Unable to Process Image",
+                        style: GoogleFonts.roboto(
+                          fontSize: 20,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Text(
+                          "We regret to inform you that the uploaded image cannot be processed at this time due to inappropriate content. Our service is designed to identify and classify leaves for legitimate purposes only. Please ensure that future uploads adhere to our content guidelines to receive accurate predictions. If you believe this is an error or have any questions, please contact our support team for assistance.",
+                          style: GoogleFonts.roboto(
+                            fontSize: 14,
+                            color: Colors.grey,
+                            fontWeight: FontWeight.w400,
+                          ),
+                          textAlign: TextAlign.center,
+                        ),
+                      ),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.green,
+                          foregroundColor: Colors.white,
+                          padding: EdgeInsets.symmetric(
+                              vertical: 10, horizontal: 100),
+                          shape: RoundedRectangleBorder(),
+                        ),
+                        onPressed: () {
+                          _leafBloc.add(LeafResetStateEvent());
+                        },
+                        child: Text("Try again"),
+                      )
+                    ],
+                  ),
                 ));
               }
 

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:leafapp/presentation/utils/data.dart';
 import 'package:lottie/lottie.dart';
 
 class CustomAppbar extends StatelessWidget {
@@ -38,7 +39,7 @@ class CustomAppbar extends StatelessWidget {
             child: Row(
               children: [
                 Text(
-                  "Leaf Lens",
+                  logo,
                   style: GoogleFonts.lobster(
                     fontSize: 20,
                   ),

@@ -51,3 +51,5 @@ List<String> option2 = [
   "✅ Confirm or retake the image.",
   "🚀 Tap 'Upload' to upload the image.",
 ];
+
+final String logo = "Leaf Snap";

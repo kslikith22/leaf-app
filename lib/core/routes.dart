@@ -24,9 +24,13 @@ class Routes {
           child: GetStarted(),
         );
       case '/result':
+        Map<String, dynamic> arguments =
+            routeSettings.arguments as Map<String, dynamic>;
         return PageTransition(
           type: PageTransitionType.rightToLeft,
-          child: ResultScreen(),
+          child: ResultScreen(
+            image: arguments['image'],
+          ),
         );
       default:
         return null;

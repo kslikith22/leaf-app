@@ -33,7 +33,7 @@ class _GetStartedState extends State<GetStarted> {
 
   void _handlelogin() {
     _prefs.setIntroStatus(value: true);
-    navigateTo(context, LoginPage());
+    Navigator.pushReplacementNamed(context, '/login');
   }
 
   @override
