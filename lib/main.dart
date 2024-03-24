@@ -6,10 +6,6 @@ import 'package:leafapp/data/repository/leaf_repository.dart';
 import 'package:leafapp/logic/ai/bloc/ai_bloc.dart';
 import 'package:leafapp/logic/auth/bloc/auth_bloc.dart';
 import 'package:leafapp/logic/leaf/bloc/leaf_bloc.dart';
-import 'package:leafapp/presentation/screens/get_started/getStarted_screen.dart';
-import 'package:leafapp/presentation/screens/home/home_screen.dart';
-import 'package:leafapp/presentation/screens/login/login_screen.dart';
-import 'package:leafapp/presentation/screens/master_screen/master_home_screen.dart';
 import 'package:leafapp/presentation/screens/splash_screen/splash_screen.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -17,6 +13,8 @@ void main() {
   WidgetsFlutterBinding.ensureInitialized();
   runApp(const MyApp());
 }
+
+// todo : Add headers in request nodeapi
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});

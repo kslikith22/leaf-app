@@ -44,10 +44,10 @@ class _PieChartAnalysisState extends State<PieChartAnalysis> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            "App usage",
+            "Service Usage",
             style: GoogleFonts.lato(
-              fontSize: 20,
-              fontWeight: FontWeight.bold,
+              fontSize: 18,
+              fontWeight: FontWeight.w600,
             ),
           ),
           Gap(30),

@@ -30,7 +30,10 @@ class _HomePageState extends State<HomePage> {
     await _prefs.initializeSharedPrefernces();
   }
 
-  List _tabBarScreens = [PieChartAnalysis(), UserHistory()];
+  List _tabBarScreens = [
+    PieChartAnalysis(),
+    UserHistory(),
+  ];
 
   Container customTabBar() {
     return Container(

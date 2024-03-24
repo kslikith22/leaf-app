@@ -10,6 +10,6 @@ class UserHistory extends StatefulWidget {
 class _UserHistoryState extends State<UserHistory> {
   @override
   Widget build(BuildContext context) {
-    return Text("hestory");
+    return Text("history");
   }
 }
