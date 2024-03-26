@@ -1,12 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:introduction_screen/introduction_screen.dart';
-import 'package:leafapp/presentation/screens/home/widgets/custom_appbar.dart';
 import 'package:leafapp/presentation/screens/login/login_screen.dart';
-import 'package:leafapp/presentation/screens/master_screen/master_home_screen.dart';
-import 'package:leafapp/presentation/utils/constants.dart';
 import 'package:leafapp/presentation/utils/data.dart';
-import 'package:leafapp/presentation/utils/repeaters.dart';
 import 'package:leafapp/presentation/utils/shared_preferences.dart';
 import 'package:lottie/lottie.dart';
 
@@ -80,11 +76,11 @@ class _GetStartedState extends State<GetStarted> {
                   done: InkWell(
                     onTap: () => _handlelogin(),
                     child: Container(
-                      padding: EdgeInsets.symmetric(
+                      padding: const EdgeInsets.symmetric(
                         horizontal: 5,
                         vertical: 10,
                       ),
-                      decoration: BoxDecoration(
+                      decoration: const BoxDecoration(
                         borderRadius: BorderRadius.all(
                           Radius.circular(10),
                         ),
@@ -107,7 +103,7 @@ class _GetStartedState extends State<GetStarted> {
                       ),
                     ),
                   ),
-                  onDone: () => LoginPage(),
+                  onDone: () => const LoginPage(),
                   dotsDecorator: DotsDecorator(
                     activeColor: Colors.green,
                     activeSize: const Size(20.0, 10.0),
@@ -132,7 +128,7 @@ class _GetStartedState extends State<GetStarted> {
                         end: Alignment.topRight,
                       ),
                     ),
-                    child: Icon(
+                    child: const Icon(
                       Icons.arrow_forward,
                       color: Colors.white,
                     ),

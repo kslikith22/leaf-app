@@ -18,6 +18,9 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     on<UserVerifyEvent>((event, emit) async {
       await _verifyUser(event, emit);
     });
+    on<UserLogoutEvent>((event, emit)  {
+       _handleLogout(event, emit);
+    });
   }
 
   Future _handleLogin(event, emit) async {
@@ -43,5 +46,9 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     } catch (e) {
       emit(AuthLoginError(error: e.toString()));
     }
+  }
+
+  void _handleLogout(event, emit) {
+    emit(AuthResetState());
   }
 }

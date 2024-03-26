@@ -16,8 +16,12 @@ class Prefernces {
     return _prefs.getBool(_introStatus) ?? false;
   }
 
-  void setToken({required token}) async {
+  void setToken({required token}) {
     _prefs.setString("token", token);
+  }
+
+  void removeToken() {
+    _prefs.setString("token", '');
   }
 
   String getToken() {

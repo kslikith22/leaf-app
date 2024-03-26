@@ -1,35 +1,41 @@
 List carouselItems = [
   {
-    "imgHeading": "Identifying Leaf Diseases",
-    "imgTitle": "Understanding Disease Patterns",
-    "image":
-        "https://media.istockphoto.com/id/1327569521/photo/science-of-plant-research-chromosome-dna-and-genetic-development-of-rice-varieties-scientist.webp?b=1&s=170667a&w=0&k=20&c=Wr-FktnB4ShWtru5s2GOzyeuMBh8ib9tfCXXTrzPv7o="
+    "imgHeading": "Black Spot",
+    "imgTitle":
+        " This fungal disease causes black, round spots that form on the upper sides of leaves. Lower leaves are usually infected first. ",
+    "image": "assets/images/c1.jpg"
   },
   {
-    "imgHeading": "Prevention and Control",
-    "imgTitle": "Biological Controls",
-    "image":
-        "https://media.istockphoto.com/id/1327569521/photo/science-of-plant-research-chromosome-dna-and-genetic-development-of-rice-varieties-scientist.webp?b=1&s=170667a&w=0&k=20&c=Wr-FktnB4ShWtru5s2GOzyeuMBh8ib9tfCXXTrzPv7o="
+    "imgHeading": "Powdery Mildew",
+    "imgTitle":
+        "Powdery mildew is a fungal disease that affects many of our landscape plants, flowers, vegetables and fruits. Powdery mildew is an easy one to identify.",
+    "image": "assets/images/c2.jpg"
   },
   {
-    "imgHeading": "Symptom Identification",
-    "imgTitle": "Deformities and Wilting",
-    "image":
-        "https://media.istockphoto.com/id/1327569521/photo/science-of-plant-research-chromosome-dna-and-genetic-development-of-rice-varieties-scientist.webp?b=1&s=170667a&w=0&k=20&c=Wr-FktnB4ShWtru5s2GOzyeuMBh8ib9tfCXXTrzPv7o="
+    "imgHeading": "Downy Mildew",
+    "imgTitle":
+        " To identify downy mildew, look for pale green or yellow spots on the upper surfaces of older leaves.  On the lower surfaces, the fungus will display a white to grayish, cotton-like downy substance. ",
+    "image": "assets/images/c3.jpg"
   },
   {
-    "imgHeading": "Monitoring and Surveillance",
-    "imgTitle": "Remote Sensing Technologies",
-    "image":
-        "https://media.istockphoto.com/id/1327569521/photo/science-of-plant-research-chromosome-dna-and-genetic-development-of-rice-varieties-scientist.webp?b=1&s=170667a&w=0&k=20&c=Wr-FktnB4ShWtru5s2GOzyeuMBh8ib9tfCXXTrzPv7o="
+    "imgHeading": "Blight",
+    "imgTitle":
+        "Plant blight is a common disease. Remember the potato famine in the 1840’s?  As a result of the blight, one million people died. ",
+    "image": "assets/images/c4.jpg"
+  },
+  {
+    "imgHeading": "Canker",
+    "imgTitle":
+        "Canker is often identified by an open wound that has been infected by fungal or bacterial pathogens.  Some cankers are not serious while others can be lethal.",
+    "image": "assets/images/c5.jpg"
   },
 ];
 
 List pageViewData = [
   {
-    "title": "Introduction Title !",
+    "title": "Introducing " + logo,
     "body":
-        "Welcome to the Leaf Disease App!\nEmpower yourself to protect your plants with our intuitive leaf disease identification tool."
+        "Empower yourself to protect your plants with our intuitive leaf disease identification tool."
   },
   {
     "title": "How to Use",
@@ -53,3 +59,11 @@ List<String> option2 = [
 ];
 
 final String logo = "Leaf Snap";
+
+
+final List<Map<String, dynamic>> contributorsData = [
+  {"name": "Keerthi M Achar", "image": "assets/images/keerthi.jpg"},
+  {"name": "Karthik J", "image": "assets/images/karthik.jpg"},
+  {"name": "Manoj Gowda B R", "image": "assets/images/manoj.jpg"},
+  {"name": "K S Likith", "image": "assets/images/likith.jpg"},
+];

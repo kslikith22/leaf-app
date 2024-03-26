@@ -35,3 +35,5 @@ class UserVerifyEvent extends AuthEvent {
   @immutable
   List get props => [token];
 }
+
+class UserLogoutEvent extends AuthEvent{}

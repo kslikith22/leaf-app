@@ -26,7 +26,8 @@ class LeafBloc extends Bloc<LeafEvent, LeafState> {
           await leafRepository.postLeafToPredict(imageFile: event.imageFile);
       emit(LeafPostedState(leafModel: predictionData));
     } catch (e) {
-      emit(LeafPostError());
+
+      emit(LeafPostError(error: e.toString()));
     }
   }
 }

@@ -12,7 +12,10 @@ class MasterHomePage extends StatefulWidget {
 class _MasterHomePageState extends State<MasterHomePage> {
   int selectIndex = 0;
 
-  List screens = [HomePage(), ScanScreen()];
+  List screens = [
+    const HomePage(),
+    const ScanScreen(),
+  ];
 
   void handleChange(index) {
     setState(() {
@@ -31,15 +34,15 @@ class _MasterHomePageState extends State<MasterHomePage> {
         elevation: 10,
         unselectedItemColor: Colors.grey,
         selectedItemColor: Colors.green,
-        selectedIconTheme: IconThemeData(size: 25),
+        selectedIconTheme: const IconThemeData(size: 25),
         items: [
           BottomNavigationBarItem(
             label: "Home",
             icon: selectIndex == 0
-                ? Icon(Icons.home_filled)
-                : Icon(Icons.home_outlined),
+                ? const Icon(Icons.home_filled)
+                : const Icon(Icons.home_outlined),
           ),
-          BottomNavigationBarItem(
+          const BottomNavigationBarItem(
             label: "Scan",
             icon: Icon(Icons.qr_code_scanner),
           )

@@ -1,20 +1,12 @@
-import 'dart:convert';
 import 'dart:io';
-
-import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:gap/gap.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:http/http.dart' as http;
-import 'package:leafapp/data/models/leaf_model.dart';
-import 'package:leafapp/data/api/ml_api.dart';
 import 'package:leafapp/logic/leaf/bloc/leaf_bloc.dart';
-import 'package:leafapp/presentation/screens/result_screen/result_screen.dart';
 import 'package:leafapp/presentation/utils/data.dart';
-import 'package:leafapp/presentation/utils/repeaters.dart';
 
 class ScanScreen extends StatefulWidget {
   const ScanScreen({Key? key}) : super(key: key);
@@ -28,7 +20,6 @@ class _ScanScreenState extends State<ScanScreen> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     _leafBloc = BlocProvider.of<LeafBloc>(context);
   }
@@ -72,7 +63,7 @@ class _ScanScreenState extends State<ScanScreen> {
             mainAxisSize: MainAxisSize.min,
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
-              SizedBox(
+              const SizedBox(
                 height: 3,
               ),
               Text(
@@ -83,11 +74,11 @@ class _ScanScreenState extends State<ScanScreen> {
                 ),
                 textAlign: TextAlign.center,
               ),
-              SizedBox(
+              const SizedBox(
                 height: 15,
               ),
               ClipRRect(
-                borderRadius: BorderRadius.all(
+                borderRadius: const BorderRadius.all(
                   Radius.circular(10),
                 ),
                 child: Image.file(
@@ -121,7 +112,7 @@ class _ScanScreenState extends State<ScanScreen> {
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.green,
                     foregroundColor: Colors.white,
-                    shape: RoundedRectangleBorder(
+                    shape: const RoundedRectangleBorder(
                       borderRadius: BorderRadius.all(
                         Radius.circular(10),
                       ),
@@ -132,7 +123,7 @@ class _ScanScreenState extends State<ScanScreen> {
 
                     Navigator.pop(context);
                   },
-                  child: Text('Confirm'),
+                  child: const Text('Confirm'),
                 ),
               ],
             ),
@@ -165,178 +156,179 @@ class _ScanScreenState extends State<ScanScreen> {
         centerTitle: true,
       ),
       body: SingleChildScrollView(
-        child: Container(
-          child: BlocConsumer<LeafBloc, LeafState>(
-            listener: (context, state) {
-              if (state is LeafPostedState) {
-                Navigator.pushNamed(context, '/result',
-                    arguments: {"image": _image!});
-              }
-            },
-            builder: (context, state) {
-              if (state is LeafPostingState) {
-                return Padding(
-                  padding: const EdgeInsets.only(top: 250),
-                  child: Center(
-                    child: SpinKitCircle(
-                      size: 50,
-                      color: Colors.green[600],
-                    ),
-                  ),
-                );
-              } else if (state is LeafPostError) {
-                return Center(
-                    child: Padding(
-                  padding: const EdgeInsets.only(top: 100),
+        child: BlocConsumer<LeafBloc, LeafState>(
+          listener: (context, state) {
+            if (state is LeafPostedState) {
+              Navigator.pushNamed(context, '/result',
+                  arguments: {"image": _image!});
+            }
+          },
+          builder: (context, state) {
+            if (state is LeafPostingState) {
+              return Padding(
+                padding: const EdgeInsets.only(top: 250),
+                child: Center(
                   child: Column(
                     children: [
+                      SpinKitCircle(
+                        size: 50,
+                        color: Colors.green[600],
+                      ),
+                      const Gap(20),
                       Text(
-                        "Unable to Process Image",
-                        style: GoogleFonts.roboto(
-                          fontSize: 20,
-                          fontWeight: FontWeight.w600,
+                        "Processing Image ! May take few seconds...",
+                        style: GoogleFonts.lato(
+                          color: Colors.grey,
                         ),
                       ),
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Text(
-                          "We regret to inform you that the uploaded image cannot be processed at this time due to inappropriate content. Our service is designed to identify and classify leaves for legitimate purposes only. Please ensure that future uploads adhere to our content guidelines to receive accurate predictions. If you believe this is an error or have any questions, please contact our support team for assistance.",
-                          style: GoogleFonts.roboto(
-                            fontSize: 14,
-                            color: Colors.grey,
-                            fontWeight: FontWeight.w400,
-                          ),
-                          textAlign: TextAlign.center,
-                        ),
-                      ),
-                      SizedBox(
-                        height: 10,
-                      ),
-                      ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: Colors.green,
-                          foregroundColor: Colors.white,
-                          padding: EdgeInsets.symmetric(
-                              vertical: 10, horizontal: 100),
-                          shape: RoundedRectangleBorder(),
-                        ),
-                        onPressed: () {
-                          _leafBloc.add(LeafResetStateEvent());
-                        },
-                        child: Text("Try again"),
-                      )
                     ],
                   ),
-                ));
-              }
-
-              return Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    // _image == null
-                    //     ? Text('No image selected.')
-                    //     : Image.file(
-                    //         File(_image!.path),
-                    //         width: MediaQuery.of(context).size.width * 0.9,
-                    //         height: MediaQuery.of(context).size.height * 0.5,
-                    //       ),
-
-                    Gap(20),
-                    Text(
-                      "Image Upload Options",
-                      style: GoogleFonts.lato(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 20,
-                      ),
-                    ),
-                    Gap(30),
-                    Text(
-                      "Option 1: Select Image from Gallery",
-                      style: GoogleFonts.lato(
-                        fontWeight: FontWeight.w600,
-                        fontSize: 15,
-                      ),
-                    ),
-                    Gap(10),
-                    SizedBox(
-                      height: 80,
-                      child: ListView.builder(
-                        itemCount: option1.length,
-                        itemBuilder: (context, index) {
-                          return Text(
-                            option1[index],
-                            style: GoogleFonts.roboto(
-                              fontSize: 14,
-                              fontWeight: FontWeight.w400,
-                            ),
-                          );
-                        },
-                      ),
-                    ),
-                    Gap(20),
-                    Center(
-                      child: ElevatedButton(
-                        onPressed: _getImageFromGallery,
-                        child: Text('Select Image from Gallery'),
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: Colors.red,
-                          fixedSize: Size(300, 10),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.all(
-                              Radius.circular(10),
-                            ),
-                          ),
-                          foregroundColor: Colors.white,
-                        ),
-                      ),
-                    ),
-                    Gap(25),
-                    Text(
-                      "Option 2: Take Image with Camera",
-                      style: GoogleFonts.lato(
-                        fontWeight: FontWeight.w600,
-                        fontSize: 15,
-                      ),
-                    ),
-                    Gap(10),
-                    SizedBox(
-                      height: 100,
-                      child: ListView.builder(
-                        itemCount: option1.length,
-                        itemBuilder: (context, index) {
-                          return Text(
-                            option2[index],
-                            style: GoogleFonts.roboto(
-                              fontSize: 14,
-                              fontWeight: FontWeight.w400,
-                            ),
-                          );
-                        },
-                      ),
-                    ),
-                    Center(
-                      child: ElevatedButton(
-                        onPressed: _getImageFromCamera,
-                        child: Text('Select Image from Camera'),
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: Colors.blue,
-                          fixedSize: Size(300, 10),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.all(
-                              Radius.circular(10),
-                            ),
-                          ),
-                          foregroundColor: Colors.white,
-                        ),
-                      ),
-                    ),
-                  ],
                 ),
               );
-            },
-          ),
+            } else if (state is LeafPostError) {
+              return Center(
+                  child: Padding(
+                padding: const EdgeInsets.only(top: 100),
+                child: Column(
+                  children: [
+                    Text(
+                      "Unable to Process Image",
+                      style: GoogleFonts.roboto(
+                        fontSize: 20,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Text(
+                        "We regret to inform you that the uploaded image cannot be processed at this time due to inappropriate content. Our service is designed to identify and classify leaves for legitimate purposes only. Please ensure that future uploads adhere to our content guidelines to receive accurate predictions. If you believe this is an error or have any questions, please contact our support team for assistance.",
+                        style: GoogleFonts.roboto(
+                          fontSize: 14,
+                          color: Colors.grey,
+                          fontWeight: FontWeight.w400,
+                        ),
+                        textAlign: TextAlign.center,
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.green,
+                        foregroundColor: Colors.white,
+                        padding: const EdgeInsets.symmetric(
+                            vertical: 10, horizontal: 100),
+                        shape: const RoundedRectangleBorder(),
+                      ),
+                      onPressed: () {
+                        _leafBloc.add(LeafResetStateEvent());
+                      },
+                      child: const Text("Try again"),
+                    )
+                  ],
+                ),
+              ));
+            }
+
+            return Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  const Gap(20),
+                  Text(
+                    "Image Upload Options",
+                    style: GoogleFonts.lato(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 20,
+                    ),
+                  ),
+                  const Gap(30),
+                  Text(
+                    "Option 1: Select Image from Gallery",
+                    style: GoogleFonts.lato(
+                      fontWeight: FontWeight.w600,
+                      fontSize: 15,
+                    ),
+                  ),
+                  const Gap(10),
+                  SizedBox(
+                    height: 80,
+                    child: ListView.builder(
+                      itemCount: option1.length,
+                      itemBuilder: (context, index) {
+                        return Text(
+                          option1[index],
+                          style: GoogleFonts.roboto(
+                            fontSize: 14,
+                            fontWeight: FontWeight.w400,
+                          ),
+                        );
+                      },
+                    ),
+                  ),
+                  const Gap(20),
+                  Center(
+                    child: ElevatedButton(
+                      onPressed: _getImageFromGallery,
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.red,
+                        fixedSize: const Size(300, 10),
+                        shape: const RoundedRectangleBorder(
+                          borderRadius: BorderRadius.all(
+                            Radius.circular(10),
+                          ),
+                        ),
+                        foregroundColor: Colors.white,
+                      ),
+                      child: const Text('Select Image from Gallery'),
+                    ),
+                  ),
+                  const Gap(25),
+                  Text(
+                    "Option 2: Take Image with Camera",
+                    style: GoogleFonts.lato(
+                      fontWeight: FontWeight.w600,
+                      fontSize: 15,
+                    ),
+                  ),
+                  const Gap(10),
+                  SizedBox(
+                    height: 100,
+                    child: ListView.builder(
+                      itemCount: option1.length,
+                      itemBuilder: (context, index) {
+                        return Text(
+                          option2[index],
+                          style: GoogleFonts.roboto(
+                            fontSize: 14,
+                            fontWeight: FontWeight.w400,
+                          ),
+                        );
+                      },
+                    ),
+                  ),
+                  Center(
+                    child: ElevatedButton(
+                      onPressed: _getImageFromCamera,
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.blue,
+                        fixedSize: const Size(300, 10),
+                        shape: const RoundedRectangleBorder(
+                          borderRadius: BorderRadius.all(
+                            Radius.circular(10),
+                          ),
+                        ),
+                        foregroundColor: Colors.white,
+                      ),
+                      child: const Text('Select Image from Camera'),
+                    ),
+                  ),
+                ],
+              ),
+            );
+          },
         ),
       ),
     );

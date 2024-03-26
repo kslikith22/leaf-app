@@ -1,14 +1,12 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:gap/gap.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:leafapp/data/models/ai_model.dart';
 import 'package:leafapp/data/models/leaf_model.dart';
 import 'package:leafapp/logic/ai/bloc/ai_bloc.dart';
+import 'package:leafapp/logic/user_activity/bloc/user_activity_bloc.dart';
 import 'package:leafapp/presentation/utils/repeaters.dart';
 import 'package:share_plus/share_plus.dart';
 
@@ -23,18 +21,19 @@ class LeafLoadedUi extends StatefulWidget {
 
 class _LeafLoadedUiState extends State<LeafLoadedUi> {
   late AIBloc _aiBloc;
+  late UserActivityBloc _userActivityBloc;
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
-    _aiBloc = BlocProvider.of(context);
+    _aiBloc = BlocProvider.of<AIBloc>(context);
     _aiBloc.add(GenerateData(className: widget.leafData.className));
+    _userActivityBloc = BlocProvider.of<UserActivityBloc>(context);
   }
 
   DecoratedBox _leafPredictionResults({required LeafModel leafData}) {
     return DecoratedBox(
-      decoration: BoxDecoration(
+      decoration: const BoxDecoration(
         color: Colors.white,
       ),
       child: Padding(
@@ -43,7 +42,7 @@ class _LeafLoadedUiState extends State<LeafLoadedUi> {
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            SizedBox(
+            const SizedBox(
               height: 20,
             ),
             Text(
@@ -53,7 +52,7 @@ class _LeafLoadedUiState extends State<LeafLoadedUi> {
                 fontWeight: FontWeight.bold,
               ),
             ),
-            Gap(20),
+            const Gap(20),
             Row(
               children: [
                 Text(
@@ -72,7 +71,7 @@ class _LeafLoadedUiState extends State<LeafLoadedUi> {
                 ),
               ],
             ),
-            Gap(10),
+            const Gap(10),
             Row(
               children: [
                 Text(
@@ -91,11 +90,11 @@ class _LeafLoadedUiState extends State<LeafLoadedUi> {
                 ),
               ],
             ),
-            Gap(18),
+            const Gap(18),
             if (leafData.confidence > 90)
               Container(
-                padding: EdgeInsets.all(8),
-                decoration: BoxDecoration(
+                padding: const EdgeInsets.all(8),
+                decoration: const BoxDecoration(
                   borderRadius: BorderRadius.all(
                     Radius.circular(10),
                   ),
@@ -112,23 +111,80 @@ class _LeafLoadedUiState extends State<LeafLoadedUi> {
                   ),
                 ),
               ),
-            Gap(20),
+            const Gap(20),
           ],
         ),
       ),
     );
   }
 
-  Center _imageView({required XFile image}) {
-    return Center(
-      child: ClipRRect(
-        borderRadius: BorderRadius.all(
-          Radius.circular(10),
-        ),
-        child: Image.file(
-          File(image.path),
-          width: 200,
-          height: 200,
+  Widget _imageView({required LeafModel leafData}) {
+    return DecoratedBox(
+      decoration: const BoxDecoration(
+        color: Colors.white,
+      ),
+      child: Padding(
+        padding: const EdgeInsets.symmetric(vertical: 30),
+        child: SingleChildScrollView(
+          scrollDirection: Axis.horizontal,
+          child: Row(
+            children: [
+              const Gap(30),
+              Column(
+                children: [
+                  ClipRRect(
+                    borderRadius: const BorderRadius.all(Radius.circular(10)),
+                    child: Image.network(
+                      leafData.imageUrl,
+                    ),
+                  ),
+                  const Gap(20),
+                  Text(
+                    "Uploaded Image",
+                    style: GoogleFonts.lato(
+                      fontWeight: FontWeight.bold,
+                    ),
+                  )
+                ],
+              ),
+              const Gap(30),
+              Column(
+                children: [
+                  ClipRRect(
+                    borderRadius: const BorderRadius.all(Radius.circular(10)),
+                    child: Image.network(
+                      leafData.markedUrl,
+                    ),
+                  ),
+                  const Gap(20),
+                  Text(
+                    "Marked image",
+                    style: GoogleFonts.lato(
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ],
+              ),
+              const Gap(30),
+              Column(
+                children: [
+                  ClipRRect(
+                    borderRadius: const BorderRadius.all(Radius.circular(10)),
+                    child: Image.network(
+                      leafData.heatmapUrl,
+                    ),
+                  ),
+                  const Gap(20),
+                  Text(
+                    "Heatmap",
+                    style: GoogleFonts.lato(
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ],
+              ),
+            ],
+          ),
         ),
       ),
     );
@@ -140,16 +196,16 @@ class _LeafLoadedUiState extends State<LeafLoadedUi> {
         'Class Name : ${leafData.className} \n\n Confidence : ${leafData.confidence.round().toString()} "%" \n\n Disease Info : ${aiData.about} \n\n Prevention Measures : ${aiData.prevention} ');
   }
 
-  Widget _shareResults(
+  Widget _shareResultsUI(
       {context, required LeafModel leafData, required AIModel aiData}) {
     return SizedBox(
       child: DecoratedBox(
-        decoration: BoxDecoration(color: Colors.white),
+        decoration: const BoxDecoration(color: Colors.white),
         child: Padding(
           padding: const EdgeInsets.all(8.0),
           child: Column(
             children: [
-              Gap(20),
+              const Gap(20),
               Text(
                 "Share your prediction result with friends and fellow nature enthusiasts to spread awareness about leaf identification.",
                 style: GoogleFonts.lato(
@@ -157,17 +213,17 @@ class _LeafLoadedUiState extends State<LeafLoadedUi> {
                   color: Colors.grey[700],
                 ),
               ),
-              Gap(5),
+              const Gap(5),
               Padding(
                 padding: const EdgeInsets.only(right: 16),
                 child: Align(
                   alignment: Alignment.bottomRight,
                   child: DecoratedBox(
-                    decoration: BoxDecoration(
+                    decoration: const BoxDecoration(
                       gradient: LinearGradient(
                         colors: [
                           Color.fromARGB(255, 87, 218, 95),
-                          const Color.fromARGB(255, 61, 155, 64)
+                          Color.fromARGB(255, 61, 155, 64)
                         ],
                       ),
                       borderRadius: BorderRadius.all(
@@ -181,7 +237,7 @@ class _LeafLoadedUiState extends State<LeafLoadedUi> {
                           _handleShare(context,
                               leafData: leafData, aiData: aiData);
                         },
-                        child: Icon(
+                        child: const Icon(
                           Icons.share,
                           size: 28,
                           color: Colors.white,
@@ -191,7 +247,7 @@ class _LeafLoadedUiState extends State<LeafLoadedUi> {
                   ),
                 ),
               ),
-              Gap(10),
+              const Gap(10),
             ],
           ),
         ),
@@ -202,14 +258,14 @@ class _LeafLoadedUiState extends State<LeafLoadedUi> {
   Widget _aboutDisease({required double screenWidth, required AIModel data}) {
     return Container(
       width: screenWidth,
-      padding: EdgeInsets.all(8.0),
-      decoration: BoxDecoration(
+      padding: const EdgeInsets.all(8.0),
+      decoration: const BoxDecoration(
         color: Colors.white,
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Gap(10),
+          const Gap(10),
           Text(
             "AI-Powered Insights",
             style: GoogleFonts.lato(
@@ -217,7 +273,7 @@ class _LeafLoadedUiState extends State<LeafLoadedUi> {
               fontWeight: FontWeight.w600,
             ),
           ),
-          Gap(5),
+          const Gap(5),
           Text(
             "Learn more about the disease and how to safeguard against it.",
             style: GoogleFonts.lato(
@@ -225,16 +281,16 @@ class _LeafLoadedUiState extends State<LeafLoadedUi> {
               fontSize: 14,
             ),
           ),
-          Gap(20),
+          const Gap(20),
           SizedBox(
             width: screenWidth,
             child: DecoratedBox(
-              decoration: BoxDecoration(
+              decoration: const BoxDecoration(
                 gradient: LinearGradient(
                   begin: Alignment.centerLeft,
                   end: Alignment.centerRight,
                   colors: [
-                    const Color.fromARGB(255, 2, 88, 74),
+                    Color.fromARGB(255, 2, 88, 74),
                     Colors.teal,
                   ],
                 ),
@@ -248,7 +304,7 @@ class _LeafLoadedUiState extends State<LeafLoadedUi> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Gap(5),
+                    const Gap(5),
                     Text(
                       'Understanding the Leaf Class',
                       style: GoogleFonts.lato(
@@ -257,7 +313,7 @@ class _LeafLoadedUiState extends State<LeafLoadedUi> {
                         fontWeight: FontWeight.w600,
                       ),
                     ),
-                    Gap(10),
+                    const Gap(10),
                     Text(
                       data.about,
                       style: GoogleFonts.lato(
@@ -271,11 +327,11 @@ class _LeafLoadedUiState extends State<LeafLoadedUi> {
               ),
             ),
           ),
-          Gap(20),
+          const Gap(20),
           SizedBox(
             width: screenWidth,
             child: DecoratedBox(
-              decoration: BoxDecoration(
+              decoration: const BoxDecoration(
                 gradient: LinearGradient(
                   begin: Alignment.centerLeft,
                   end: Alignment.centerRight,
@@ -293,7 +349,7 @@ class _LeafLoadedUiState extends State<LeafLoadedUi> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Gap(5),
+                    const Gap(5),
                     Text(
                       'Prevention Measures',
                       style: GoogleFonts.lato(
@@ -302,7 +358,7 @@ class _LeafLoadedUiState extends State<LeafLoadedUi> {
                         fontWeight: FontWeight.w600,
                       ),
                     ),
-                    Gap(10),
+                    const Gap(10),
                     Text(
                       data.prevention,
                       style: GoogleFonts.lato(
@@ -324,23 +380,21 @@ class _LeafLoadedUiState extends State<LeafLoadedUi> {
   @override
   Widget build(BuildContext context) {
     final double screenWidth = MediaQuery.of(context).size.width;
-    final double screenHeight = MediaQuery.of(context).size.height;
     return SingleChildScrollView(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Gap(50),
-          _imageView(image: widget.image),
-          Gap(20),
+          const Gap(50),
+          _imageView(leafData: widget.leafData),
+          const Gap(20),
           _leafPredictionResults(leafData: widget.leafData),
-          Gap(20),
+          const Gap(20),
           BlocConsumer<AIBloc, AIState>(
             listener: (context, state) {
               if (state is AIErrorState) {
                 snackbar(context, "Something went Wrong");
               }
-              // TODO: implement listener
             },
             builder: (context, state) {
               if (state is AILoadingState) {
@@ -349,15 +403,15 @@ class _LeafLoadedUiState extends State<LeafLoadedUi> {
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      SpinKitChasingDots(
+                      const SpinKitChasingDots(
                         size: 28,
                         color: Colors.green,
                       ),
-                      Gap(10),
+                      const Gap(10),
                       Text(
                         "Generating Insights ...",
                         style: GoogleFonts.lato(
-                          color: Color.fromARGB(255, 109, 107, 107),
+                          color: const Color.fromARGB(255, 109, 107, 107),
                         ),
                       )
                     ],
@@ -365,24 +419,56 @@ class _LeafLoadedUiState extends State<LeafLoadedUi> {
                 );
               }
               if (state is AILoadedState) {
-                return Column(
-                  children: [
-                    _aboutDisease(
-                        screenWidth: screenWidth, data: state.aiModel),
-                    Gap(20),
-                    _shareResults(
-                      context: context,
-                      leafData: widget.leafData,
-                      aiData: state.aiModel,
-                    ),
-                  ],
+                _userActivityBloc.add(
+                  UserActivityPostEvent(
+                      aiModel: state.aiModel, leafModel: widget.leafData),
+                );
+                return BlocConsumer<UserActivityBloc, UserActivityState>(
+                  listener: (context, activityState) {
+                    if (activityState is UserActivityPostError) {
+                      snackbar(context, "Error posting data");
+                    }
+                  },
+                  builder: (context, activityState) {
+                    if (activityState is UserActivityPostedState) {
+                      return Column(
+                        children: [
+                          _aboutDisease(
+                            screenWidth: screenWidth,
+                            data: state.aiModel,
+                          ),
+                          const Gap(20),
+                          _shareResultsUI(
+                            context: context,
+                            leafData: widget.leafData,
+                            aiData: state.aiModel,
+                          ),
+                        ],
+                      );
+                    } else {
+                      return Column(
+                        children: [
+                          _aboutDisease(
+                            screenWidth: screenWidth,
+                            data: state.aiModel,
+                          ),
+                          const Gap(20),
+                          _shareResultsUI(
+                            context: context,
+                            leafData: widget.leafData,
+                            aiData: state.aiModel,
+                          ),
+                        ],
+                      );
+                    }
+                  },
                 );
               } else {
-                return Text("");
+                return const Text("");
               }
             },
           ),
-          Gap(20),
+          const Gap(20),
         ],
       ),
     );

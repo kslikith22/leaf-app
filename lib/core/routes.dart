@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:leafapp/presentation/screens/contibutors/contributors_screen.dart';
 import 'package:leafapp/presentation/screens/get_started/getStarted_screen.dart';
 import 'package:leafapp/presentation/screens/login/login_screen.dart';
 import 'package:leafapp/presentation/screens/master_screen/master_home_screen.dart';
@@ -11,17 +12,17 @@ class Routes {
       case '/home':
         return PageTransition(
           type: PageTransitionType.rightToLeft,
-          child: MasterHomePage(),
+          child: const MasterHomePage(),
         );
       case '/login':
         return PageTransition(
           type: PageTransitionType.rightToLeft,
-          child: LoginPage(),
+          child: const LoginPage(),
         );
       case '/get-started':
         return PageTransition(
           type: PageTransitionType.rightToLeft,
-          child: GetStarted(),
+          child: const GetStarted(),
         );
       case '/result':
         Map<String, dynamic> arguments =
@@ -31,6 +32,11 @@ class Routes {
           child: ResultScreen(
             image: arguments['image'],
           ),
+        );
+      case '/contributors':
+        return PageTransition(
+          type: PageTransitionType.rightToLeft,
+          child: const Contributors(),
         );
       default:
         return null;

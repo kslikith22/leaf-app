@@ -13,10 +13,13 @@ final class LeafPostingState extends LeafState {}
 
 final class LeafPostedState extends LeafState {
   final LeafModel leafModel;
-  LeafPostedState({required this.leafModel});
+ const LeafPostedState({required this.leafModel});
 
   @immutable
   List<Object> get props => [leafModel];
 }
 
-final class LeafPostError extends LeafState {}
+final class LeafPostError extends LeafState {
+  final String error;
+ const LeafPostError({required this.error});
+}

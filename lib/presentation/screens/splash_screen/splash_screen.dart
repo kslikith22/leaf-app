@@ -1,16 +1,10 @@
-import 'package:animated_splash_screen/animated_splash_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:leafapp/logic/auth/bloc/auth_bloc.dart';
-import 'package:leafapp/presentation/screens/get_started/getStarted_screen.dart';
-import 'package:leafapp/presentation/screens/home/home_screen.dart';
-import 'package:leafapp/presentation/screens/login/login_screen.dart';
 import 'package:leafapp/presentation/utils/data.dart';
-import 'package:leafapp/presentation/utils/repeaters.dart';
 import 'package:leafapp/presentation/utils/shared_preferences.dart';
 import 'package:loading_overlay/loading_overlay.dart';
-import 'package:page_transition/page_transition.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({Key? key}) : super(key: key);
@@ -18,8 +12,6 @@ class SplashScreen extends StatefulWidget {
   @override
   State<SplashScreen> createState() => _SplashScreenState();
 }
-
-// todo : verify user with prefs token
 
 class _SplashScreenState extends State<SplashScreen> {
   late Prefernces _prefs;
@@ -73,7 +65,7 @@ class _SplashScreenState extends State<SplashScreen> {
           } else if (state is AuthLoginError) {
             Navigator.pushReplacementNamed(context, '/login');
             ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(
+              const SnackBar(
                 content: Text("Session expired Please login again"),
               ),
             );
@@ -87,7 +79,7 @@ class _SplashScreenState extends State<SplashScreen> {
               child: Container(
                 width: screenWidth,
                 height: screenHeight,
-                decoration: BoxDecoration(color: Colors.green),
+                decoration: const BoxDecoration(color: Colors.green),
                 child: Center(
                     child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -116,29 +108,30 @@ class _SplashScreenState extends State<SplashScreen> {
           return Container(
             width: screenWidth,
             height: screenHeight,
-            decoration: BoxDecoration(color: Colors.green),
+            decoration: const BoxDecoration(color: Colors.green),
             child: Center(
-                child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text(
-                  logo,
-                  style: GoogleFonts.lato(
-                    color: Colors.white,
-                    fontSize: 30,
-                    fontWeight: FontWeight.bold,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    logo,
+                    style: GoogleFonts.lato(
+                      color: Colors.white,
+                      fontSize: 30,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
-                ),
-                Text(
-                  "Nature's Palette: Dive into Leaf Identification.",
-                  style: GoogleFonts.lobster(
-                    fontSize: 13,
-                    color: Colors.white,
-                    fontWeight: FontWeight.w200,
-                  ),
-                )
-              ],
-            )),
+                  Text(
+                    "Nature's Palette: Dive into Leaf Identification.",
+                    style: GoogleFonts.lobster(
+                      fontSize: 13,
+                      color: Colors.white,
+                      fontWeight: FontWeight.w200,
+                    ),
+                  )
+                ],
+              ),
+            ),
           );
         },
       ),

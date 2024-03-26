@@ -1,17 +1,12 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:leafapp/logic/auth/bloc/auth_bloc.dart';
-import 'package:leafapp/presentation/screens/home/home_screen.dart';
-import 'package:leafapp/presentation/screens/master_screen/master_home_screen.dart';
 import 'package:leafapp/presentation/utils/data.dart';
-import 'package:leafapp/presentation/utils/repeaters.dart';
 import 'package:leafapp/presentation/utils/shared_preferences.dart';
-import 'package:http/http.dart' as http;
 import 'package:sign_in_button/sign_in_button.dart';
 
 class LoginPage extends StatefulWidget {
@@ -46,13 +41,13 @@ class _LoginPageState extends State<LoginPage> {
       if (googleSignInAccount != null) {
         _authBloc.add(
           UserLoginEvent(
-              email: googleSignInAccount.email,
-              name: googleSignInAccount.displayName!,
-              profilePicture: googleSignInAccount.photoUrl!,
-              status: '',
-              token: ''),
+            email: googleSignInAccount.email,
+            name: googleSignInAccount.displayName ?? '',
+            profilePicture: googleSignInAccount.photoUrl ?? '',
+            status: '',
+            token: '',
+          ),
         );
-        print('User: ${googleSignInAccount.displayName}');
       } else {
         print('Sign in canceled');
       }
@@ -86,7 +81,7 @@ class _LoginPageState extends State<LoginPage> {
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.green,
                   foregroundColor: Colors.white,
-                  shape: RoundedRectangleBorder(
+                  shape: const RoundedRectangleBorder(
                     borderRadius: BorderRadius.all(
                       Radius.circular(5),
                     ),
@@ -95,7 +90,7 @@ class _LoginPageState extends State<LoginPage> {
                 onPressed: () {
                   Navigator.pop(context);
                 },
-                child: Text("Ok Understood !"),
+                child: const Text("Ok Understood !"),
               )
             ],
           );
@@ -125,6 +120,8 @@ class _LoginPageState extends State<LoginPage> {
                     ),
                   ),
                   Positioned(
+                    top: 50,
+                    right: screenWidth * 0.40,
                     child: Text(
                       logo,
                       style: GoogleFonts.lobster(
@@ -132,20 +129,18 @@ class _LoginPageState extends State<LoginPage> {
                         fontSize: 20,
                       ),
                     ),
-                    top: 50,
-                    right: screenWidth * 0.40,
                   )
                 ],
               ),
             ),
             DecoratedBox(
-              decoration: BoxDecoration(
+              decoration: const BoxDecoration(
                 color: Colors.green,
               ),
               child: Container(
                 width: screenWidth,
                 height: screenHeight * 0.5,
-                decoration: BoxDecoration(
+                decoration: const BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.horizontal(
                     left: Radius.circular(20),
@@ -154,7 +149,7 @@ class _LoginPageState extends State<LoginPage> {
                 ),
                 child: Column(
                   children: [
-                    SizedBox(
+                    const SizedBox(
                       height: 40,
                     ),
                     Align(
@@ -182,7 +177,7 @@ class _LoginPageState extends State<LoginPage> {
                         ],
                       ),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 20,
                     ),
                     BlocConsumer<AuthBloc, AuthState>(
@@ -193,7 +188,7 @@ class _LoginPageState extends State<LoginPage> {
                         }
                         if (state is AuthLoginError) {
                           ScaffoldMessenger.of(context).showSnackBar(
-                            SnackBar(
+                            const SnackBar(
                               content: Text("Something went wrong"),
                             ),
                           );
@@ -201,8 +196,8 @@ class _LoginPageState extends State<LoginPage> {
                       },
                       builder: (context, state) {
                         if (state is AuthLoadingState) {
-                          return Center(
-                            child: CircularProgressIndicator(),
+                          return const Center(
+                            child: SpinKitCircle(color: Colors.green),
                           );
                         }
                         return Padding(
@@ -213,8 +208,8 @@ class _LoginPageState extends State<LoginPage> {
                                 child: SignInButton(
                                   Buttons.google,
                                   elevation: 5,
-                                  padding: EdgeInsets.all(10),
-                                  shape: RoundedRectangleBorder(
+                                  padding: const EdgeInsets.all(10),
+                                  shape: const RoundedRectangleBorder(
                                     borderRadius: BorderRadius.all(
                                       Radius.circular(5),
                                     ),
@@ -229,13 +224,13 @@ class _LoginPageState extends State<LoginPage> {
                                 height: 50,
                               ),
                               Text(
-                                "This step is prevent misuse of service",
+                                "This step is to prevent misuse of our product",
                                 style: GoogleFonts.lato(
                                   fontSize: 14,
                                   fontWeight: FontWeight.w500,
                                 ),
                               ),
-                              SizedBox(
+                              const SizedBox(
                                 height: 5,
                               ),
                               InkWell(
