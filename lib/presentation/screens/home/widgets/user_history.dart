@@ -7,6 +7,8 @@ import 'package:leafapp/data/models/user_activity_model.dart';
 import 'package:leafapp/logic/user_activity/bloc/user_activity_bloc.dart';
 import 'package:leafapp/presentation/utils/repeaters.dart';
 import 'package:share_plus/share_plus.dart';
+import 'package:intl/intl.dart';
+import 'package:timezone/timezone.dart' as tz;
 
 class UserHistory extends StatefulWidget {
   const UserHistory({super.key});
@@ -99,7 +101,7 @@ class _UserHistoryState extends State<UserHistory> {
                         fontWeight: FontWeight.bold,
                       ),
                     ),
-                  const  Gap(10),
+                    const Gap(10),
                     Text(
                       "Confidence : ${history.confidence.round()}",
                       style: GoogleFonts.lato(
@@ -108,14 +110,14 @@ class _UserHistoryState extends State<UserHistory> {
                         color: Colors.grey[600],
                       ),
                     ),
-                  const  Gap(20),
+                    const Gap(20),
                     Text(
                       "Preview",
                       style: GoogleFonts.lato(
                         fontWeight: FontWeight.bold,
                       ),
                     ),
-                const    Gap(10),
+                    const Gap(10),
                     SingleChildScrollView(
                       scrollDirection: Axis.horizontal,
                       child: Row(
@@ -128,10 +130,13 @@ class _UserHistoryState extends State<UserHistory> {
                                   ),
                                   child: Image.network(
                                     history.imageUrl,
+                                    width: 260,
+                                    height: 300,
+                                    fit: BoxFit.cover,
                                   ),
                                 )
-                              :const Text(""),
-                      const    Gap(20),
+                              : const Text(""),
+                          const Gap(20),
                           history.markedUrl.startsWith('http://') ||
                                   history.markedUrl.startsWith('https://')
                               ? ClipRRect(
@@ -140,10 +145,13 @@ class _UserHistoryState extends State<UserHistory> {
                                   ),
                                   child: Image.network(
                                     history.markedUrl,
+                                    width: 260,
+                                    height: 300,
+                                    fit: BoxFit.cover,
                                   ),
                                 )
                               : const Text(""),
-                      const    Gap(20),
+                          const Gap(20),
                           history.heatmapUrl.startsWith('http://') ||
                                   history.heatmapUrl.startsWith('https://')
                               ? ClipRRect(
@@ -152,6 +160,9 @@ class _UserHistoryState extends State<UserHistory> {
                                   ),
                                   child: Image.network(
                                     history.heatmapUrl,
+                                    width: 260,
+                                    height: 300,
+                                    fit: BoxFit.cover,
                                   ),
                                 )
                               : const Text(""),
@@ -184,7 +195,7 @@ class _UserHistoryState extends State<UserHistory> {
                                 fontSize: 18,
                               ),
                             ),
-                         const   Gap(10),
+                            const Gap(10),
                             Text(
                               history.about,
                               style: GoogleFonts.lato(
@@ -197,7 +208,7 @@ class _UserHistoryState extends State<UserHistory> {
                         ),
                       ),
                     ),
-                const    Gap(20),
+                    const Gap(20),
                     DecoratedBox(
                       decoration: const BoxDecoration(
                         borderRadius: BorderRadius.all(
@@ -205,7 +216,7 @@ class _UserHistoryState extends State<UserHistory> {
                         ),
                         gradient: LinearGradient(
                           colors: [
-                             Color.fromARGB(255, 27, 94, 32),
+                            Color.fromARGB(255, 27, 94, 32),
                             Colors.green,
                           ],
                         ),
@@ -298,7 +309,7 @@ class _UserHistoryState extends State<UserHistory> {
             );
           } else {
             return Container(
-              decoration:const BoxDecoration(color: Colors.white),
+              decoration: const BoxDecoration(color: Colors.white),
               child: Column(
                 children: [
                   ListView.builder(
@@ -337,6 +348,8 @@ class _UserHistoryState extends State<UserHistory> {
                                               child: Image.network(
                                                 history.imageUrl,
                                                 width: 40,
+                                                height: 40,
+                                                fit: BoxFit.cover,
                                               ),
                                             )
                                           : Text(
@@ -363,7 +376,7 @@ class _UserHistoryState extends State<UserHistory> {
                                               fontWeight: FontWeight.bold,
                                             ),
                                           ),
-                                        ],
+                                      ],
                                       ),
                                     ],
                                   ),

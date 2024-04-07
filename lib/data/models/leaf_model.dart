@@ -15,11 +15,11 @@ class LeafModel {
 
   factory LeafModel.fromJson(Map<String, dynamic> json) {
     return LeafModel(
-      className: json['class_name'],
-      confidence: json['confidence'],
-      imageUrl: json['imageUrl'],
-      markedUrl: json['markedUrl'],
-      heatmapUrl: json['heatmapUrl']
+      className: json['class_name'] ?? '',
+      confidence: json['confidence'] ?? '',
+      imageUrl: json['imageUrl'] ?? '',
+      markedUrl: json['markedUrl'] ?? '',
+      heatmapUrl: json['heatmapUrl'] ?? ''
     );
   }
 }

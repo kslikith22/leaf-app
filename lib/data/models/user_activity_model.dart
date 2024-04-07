@@ -8,31 +8,32 @@ class UserHistoryModel {
   final String prevention;
   final String markedUrl;
   final String heatmapUrl;
+  final String createdAt;
 
-  UserHistoryModel({
-    required this.about,
-    required this.className,
-    required this.confidence,
-    required this.heatmapUrl,
-    required this.id,
-    required this.imageUrl,
-    required this.markedUrl,
-    required this.prevention,
-    required this.userId,
-  });
+  UserHistoryModel(
+      {required this.about,
+      required this.className,
+      required this.confidence,
+      required this.heatmapUrl,
+      required this.id,
+      required this.imageUrl,
+      required this.markedUrl,
+      required this.prevention,
+      required this.userId,
+      required this.createdAt});
 
   factory UserHistoryModel.fromJson(Map<String, dynamic> jsonData) {
     return UserHistoryModel(
-      about: jsonData['about'] ?? '',
-      className: jsonData['className'] ?? '',
-      confidence: jsonData['confidence'] ?? '',
-      heatmapUrl: jsonData['heatmapUrl'] ?? '',
-      id: jsonData['_id'] ?? '',
-      imageUrl: jsonData['imageUrl'] ?? '',
-      markedUrl: jsonData['markedUrl'] ?? '',
-      prevention: jsonData['prevention'] ?? '',
-      userId: jsonData['userId'] ?? '',
-    );
+        about: jsonData['about'] ?? '',
+        className: jsonData['className'] ?? '',
+        confidence: jsonData['confidence'] ?? '',
+        heatmapUrl: jsonData['heatmapUrl'] ?? '',
+        id: jsonData['_id'] ?? '',
+        imageUrl: jsonData['imageUrl'] ?? '',
+        markedUrl: jsonData['markedUrl'] ?? '',
+        prevention: jsonData['prevention'] ?? '',
+        userId: jsonData['userId'] ?? '',
+        createdAt: jsonData['createdAt'] ?? '');
   }
 }
 
@@ -65,7 +66,6 @@ class UserActivityModel {
   });
 
   factory UserActivityModel.fromJson(Map<String, dynamic> jsonData) {
-    print(jsonData['userActivities']); // Add this line for debugging
     return UserActivityModel(
       userHistoryModel: (jsonData['userActivities'] as List<dynamic>?)
               ?.map((history) => UserHistoryModel.fromJson(history))

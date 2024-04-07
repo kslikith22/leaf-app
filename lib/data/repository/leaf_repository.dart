@@ -1,6 +1,5 @@
 import 'package:dio/dio.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:leafapp/data/api/node_api.dart';
 import 'package:leafapp/data/models/leaf_model.dart';
 import 'package:leafapp/data/api/ml_api.dart';
 

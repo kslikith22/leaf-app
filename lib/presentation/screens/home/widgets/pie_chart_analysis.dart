@@ -133,7 +133,7 @@ class _PieChartAnalysisState extends State<PieChartAnalysis> {
                   ),
                   const Gap(20),
                   Text(
-                    "Here's a breakdown of insights proportions. Each slice represents a percentage of the whole.",
+                    "Here's a breakdown of insights proportions. Each slice represents a count of the whole.",
                     style: GoogleFonts.lato(color: Colors.grey, fontSize: 12),
                     textAlign: TextAlign.center,
                   )

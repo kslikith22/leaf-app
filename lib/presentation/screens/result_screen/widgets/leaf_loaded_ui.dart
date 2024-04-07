@@ -98,10 +98,12 @@ class _LeafLoadedUiState extends State<LeafLoadedUi> {
                   borderRadius: BorderRadius.all(
                     Radius.circular(10),
                   ),
-                  gradient: LinearGradient(colors: [
-                    Color.fromARGB(255, 183, 115, 13),
-                    Color.fromARGB(255, 235, 161, 42),
-                  ]),
+                  gradient: LinearGradient(
+                    colors: [
+                      Color.fromARGB(255, 183, 115, 13),
+                      Color.fromARGB(255, 235, 161, 42),
+                    ],
+                  ),
                 ),
                 child: Text(
                   "High Confidence! The leaf has been identified with over 90% certainty",
@@ -136,6 +138,9 @@ class _LeafLoadedUiState extends State<LeafLoadedUi> {
                     borderRadius: const BorderRadius.all(Radius.circular(10)),
                     child: Image.network(
                       leafData.imageUrl,
+                      width: 260,
+                      height: 300,
+                      fit: BoxFit.cover,
                     ),
                   ),
                   const Gap(20),
@@ -154,6 +159,9 @@ class _LeafLoadedUiState extends State<LeafLoadedUi> {
                     borderRadius: const BorderRadius.all(Radius.circular(10)),
                     child: Image.network(
                       leafData.markedUrl,
+                      width: 260,
+                      height: 300,
+                      fit: BoxFit.cover,
                     ),
                   ),
                   const Gap(20),
@@ -172,6 +180,9 @@ class _LeafLoadedUiState extends State<LeafLoadedUi> {
                     borderRadius: const BorderRadius.all(Radius.circular(10)),
                     child: Image.network(
                       leafData.heatmapUrl,
+                      width: 260,
+                      height: 300,
+                      fit: BoxFit.cover,
                     ),
                   ),
                   const Gap(20),
@@ -421,7 +432,9 @@ class _LeafLoadedUiState extends State<LeafLoadedUi> {
               if (state is AILoadedState) {
                 _userActivityBloc.add(
                   UserActivityPostEvent(
-                      aiModel: state.aiModel, leafModel: widget.leafData),
+                    aiModel: state.aiModel,
+                    leafModel: widget.leafData,
+                  ),
                 );
                 return BlocConsumer<UserActivityBloc, UserActivityState>(
                   listener: (context, activityState) {

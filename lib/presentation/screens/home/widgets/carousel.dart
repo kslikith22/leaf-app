@@ -33,7 +33,7 @@ class _CarouselState extends State<Carousel> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-         const Gap(14),
+          const Gap(14),
           Text(
             "Common Plant Diseases",
             style: GoogleFonts.lato(
@@ -51,9 +51,9 @@ class _CarouselState extends State<Carousel> {
               enableInfiniteScroll: true,
               reverse: false,
               autoPlay: true,
-              // autoPlayInterval: const Duration(seconds: 10),
-              // autoPlayAnimationDuration: const Duration(seconds: 3),
-              // autoPlayCurve: Curves.bounceOut,
+              autoPlayInterval: const Duration(seconds: 2),
+              autoPlayAnimationDuration: const Duration(seconds: 1),
+              autoPlayCurve: Curves.easeInOut,
               enlargeCenterPage: true,
               enlargeFactor: 0.2,
               onPageChanged: (index, reason) => handleCarouselChange(index),
@@ -84,7 +84,7 @@ class _CarouselState extends State<Carousel> {
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 Container(
-                                  padding:const EdgeInsets.only(
+                                  padding: const EdgeInsets.only(
                                     left: 10,
                                   ),
                                   width: MediaQuery.of(context).size.width,

@@ -5,7 +5,9 @@ class NODEAPI {
   final Dio _dio = Dio();
 
   NODEAPI() {
-    _dio.options.baseUrl = 'https://leaf-user-api.onrender.com/api';
+    // _dio.options.baseUrl = 'https://leaf-user-api.onrender.com/api';
+        _dio.options.baseUrl = 'http://10.0.2.2:8001/api';
+    // _dio.options.baseUrl = 'http://192.168.29.161:8001/api';
     _dio.interceptors.add(PrettyDioLogger());
   }
 

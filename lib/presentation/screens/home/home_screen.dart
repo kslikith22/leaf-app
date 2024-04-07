@@ -55,10 +55,12 @@ class _HomePageState extends State<HomePage> {
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text("Are You Sure ?",
-                  style: GoogleFonts.lato(
-                      fontSize: 20, fontWeight: FontWeight.bold)),
-              const Gap(3),
+              Text(
+                "Are You Sure ?",
+                style: GoogleFonts.roboto(
+                    fontSize: 20, fontWeight: FontWeight.bold),
+              ),
+              const Gap(2),
               Text(
                 "You will logged out from the current session !",
                 style: GoogleFonts.lato(fontSize: 10, color: Colors.grey),
@@ -292,7 +294,7 @@ class _HomePageState extends State<HomePage> {
                       _tabBarScreens[_tabBarViewIndex],
                       const Gap(30),
                       if (_tabBarViewIndex == 0) contributors(context),
-                      const Gap(50)
+                      const Gap(50),
                     ],
                   ),
                 ],
