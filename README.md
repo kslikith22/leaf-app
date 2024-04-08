@@ -2,7 +2,7 @@
 
 ## Download flutter sdk from (https://flutter.dev)
 
-## create a OAUTH2.0 client id for google authentication from (https://cloud.google.com/)
+## Create an OAUTH2.0 client id for google authentication from (https://cloud.google.com/)
 - paste the google-services.json file inside ```leafapp/android/app/```
 
 ## Steps to run
