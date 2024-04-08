@@ -2,8 +2,12 @@
 
 ## Download flutter sdk from (https://flutter.dev)
 
+## create a OAUTH2.0 client id for google authentication from (https://cloud.google.com/)
+- paste the google-services.json file inside ```leafapp/android/app/```
+
 ## Steps to run
 ``` flutter pub get ```
+``` flutter run or Ctrl + F5 ```
 
 ## Connected repos (Mandatory for running application)
 
