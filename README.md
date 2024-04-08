@@ -14,3 +14,9 @@ A few resources to get you started if this is your first Flutter project:
 For help getting started with Flutter development, view the
 [online documentation](https://docs.flutter.dev/), which offers tutorials,
 samples, guidance on mobile development, and a full API reference.
+
+##Connected repos (Mandatory for running application)
+```https://github.com/kslikith22/leaf-model-api```   (python FastApi for predicting)
+```https://github.com/kslikith22/leaf-user-api```    (nodejs for user auth and activity management)
+
+
