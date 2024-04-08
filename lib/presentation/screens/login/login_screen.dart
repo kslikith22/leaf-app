@@ -58,43 +58,44 @@ class _LoginPageState extends State<LoginPage> {
 
   void _showMisuseDialog() {
     showDialog(
-        context: context,
-        builder: (_) {
-          return AlertDialog(
-            surfaceTintColor: Colors.white,
-            title: Text(
-              "Secure Access Portal",
-              style: GoogleFonts.roboto(
-                fontSize: 18,
-                fontWeight: FontWeight.bold,
-              ),
+      context: context,
+      builder: (_) {
+        return AlertDialog(
+          surfaceTintColor: Colors.white,
+          title: Text(
+            "Secure Access Portal",
+            style: GoogleFonts.roboto(
+              fontSize: 18,
+              fontWeight: FontWeight.bold,
             ),
-            content: Text(
-              "Protecting Your Privacy: Login to Ensure Secure and Authorized Access to Our Services. We utilize Google authentication to safeguard your account and prevent misuse. Your privacy and security are our top priorities.",
-              style: GoogleFonts.roboto(
-                fontSize: 14,
-                fontWeight: FontWeight.w400,
-              ),
+          ),
+          content: Text(
+            "Protecting Your Privacy: Login to Ensure Secure and Authorized Access to Our Services. We utilize Google authentication to safeguard your account and prevent misuse. Your privacy and security are our top priorities.",
+            style: GoogleFonts.roboto(
+              fontSize: 14,
+              fontWeight: FontWeight.w400,
             ),
-            actions: [
-              ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.green,
-                  foregroundColor: Colors.white,
-                  shape: const RoundedRectangleBorder(
-                    borderRadius: BorderRadius.all(
-                      Radius.circular(5),
-                    ),
+          ),
+          actions: [
+            ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.green,
+                foregroundColor: Colors.white,
+                shape: const RoundedRectangleBorder(
+                  borderRadius: BorderRadius.all(
+                    Radius.circular(5),
                   ),
                 ),
-                onPressed: () {
-                  Navigator.pop(context);
-                },
-                child: const Text("Ok Understood !"),
-              )
-            ],
-          );
-        });
+              ),
+              onPressed: () {
+                Navigator.pop(context);
+              },
+              child: const Text("Ok Understood !"),
+            )
+          ],
+        );
+      },
+    );
   }
 
   @override
