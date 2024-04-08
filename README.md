@@ -1,6 +1,8 @@
-# leafapp
+## leafapp
 
-# Steps to run
+## Download flutter sdk from (https://flutter.dev)
+
+## Steps to run
 ``` flutter pub get ```
 
 ## Connected repos (Mandatory for running application)
